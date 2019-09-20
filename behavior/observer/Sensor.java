@@ -1,30 +1,19 @@
 package behavior;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import java.util.ArrayList;
+import java.util.Observable;
 
-public class Sensor implements Observable {
+public class Sensor extends Observable {
     private float temperature;
     private float humidity;
     private float pressure;
-    private ArrayList<Display> listeners;
-    private Display textDisplay;
-
-    public Sensor() {
-        listeners = new ArrayList<Display>();
-        textDisplay = new Display();
-    }
-
-    public Sensor(Display mine) {
-        this.textDisplay = mine;
-    }
 
     public void setSensor(float temperature, float humidity, float pressure) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.pressure = pressure;
-        textDisplay.textDisplay(String.format("H: %f, P: %f, T:%f", humidity, pressure, temperature));
+        
+        this.notifyObservers((Object)String.format("H: %f, P: %f, T:%f", getHumidity(), getPressure(), getTemperature()));
+        // this.notifyObservers();
     }
 
     public float getTemperature() {
@@ -49,17 +38,5 @@ public class Sensor implements Observable {
 
     public void setPressure(float pressure) {
         this.pressure = pressure;
-    }
-
-    @Override
-    public void addListener(InvalidationListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removeListener(InvalidationListener listener) {
-        // TODO Auto-generated method stub
-
     }
 }
